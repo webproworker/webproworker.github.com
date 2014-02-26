@@ -63,3 +63,89 @@
   background: #57A957;
   border: 1px solid #4c964d;
   color: #FFF; }
+
+/* CUSTOM BLOG */
+a{
+  text-decoration: none;
+  cursor: pointer;
+  color: #008000;
+}
+
+a:hover{
+  background: #008000;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
+article{
+  margin: 0 0 50px;
+}
+
+article header,
+article footer{
+  color: #888888;
+  font-size: 12px;
+}
+
+article h2{
+  margin: 0;
+}
+
+article h2 a{
+  color: black;
+}
+
+article .content{
+  margin-top: 15px;
+}
+
+.container{
+  /*width: 960px;*/
+}
+
+.navbar .container{
+  width: 960px;
+}
+
+.content{
+  margin-top: 40px;
+}
+
+footer.main{
+  background-color: black;
+  color: white;
+  height: 60px;
+  line-height: 60px;
+}
+
+footer.main a{
+  color: #FFFC09;
+}
+
+footer.main a:hover{
+  background: none;
+}
+
+header.main{
+  border-bottom: 5px solid #008000;
+  background-color: #000000;
+  color: #FFFFFF;
+  height: 45px;
+  line-height: 24px;
+  position: relative;
+}
+
+header.main a{
+  color: white;
+  font-size: 24px;
+  line-height: 45px;
+}
+
+header.main a:hover{
+  background: none;
+}
+
+header.main .social{
+  display: inline-block;
+  float: right;
+}
