@@ -149,3 +149,12 @@ header.main .social{
   display: inline-block;
   float: right;
 }
+
+article footer .categories-list{
+  display: inline;
+  margin-left: 5px;
+}
+
+article footer .categories-list li{
+  display: inline;
+}

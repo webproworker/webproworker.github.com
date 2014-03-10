@@ -54,7 +54,9 @@
     </header>
 
     <div class="container">
-      <img src="{{ ASSET_PATH }}/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      <a href="{{ HOME_PATH }}">
+        <img src="{{ ASSET_PATH }}/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
       <div class="row">
         <div class="content">
           <div class="span8">
@@ -62,6 +64,13 @@
           </div>
           <div class="span4">
             <h2>Recent posts</h2>
+              <ul class="posts">  
+                {% for post in site.posts limit:5 %}  
+                   <li>
+                     <a href="{{ BASE_PATH }}{{ post.url }}">{{ post.title }}</a>  
+                   </li>  
+                {% endfor %}  
+              </ul>
           </div>
         </div>
 
