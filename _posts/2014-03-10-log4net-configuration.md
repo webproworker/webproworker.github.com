@@ -1,9 +1,8 @@
 ---
 layout: post
-title: "whaza"
+title: "Log4net configuration"
 description: ""
-category: gigel marcel
+category: 
 tags: []
 ---
 {% include JB/setup %}
-tre sa scriu aici?

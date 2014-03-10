@@ -11,9 +11,9 @@
       </div>
 
     <footer>
-      <span>This entry was posted in</span>
       {% unless page.categories == empty %}
         <ul class="categories-list">
+          <span>This entry was posted in</span>
           <!-- <li><i class="icon-folder-open"></i></li> -->
           {% assign categories_list = page.categories %}
           {% include JB/categories_list %}
