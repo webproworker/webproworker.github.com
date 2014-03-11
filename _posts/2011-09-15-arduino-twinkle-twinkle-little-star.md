@@ -15,9 +15,7 @@ They have some thorough tutorials on their website here
 
 I’ve used this tutorial to play some sounds with a piezo speaker and then I’ve changed a little bit the program to play my own baby. Since I don’t know which cord is which note (I suck reading guitar notes) I’ve used this tutorial to find what’s what.
 
-This is what came out.
-
-{% youtube Jw_qqG_obR8 420 315 %}
+This is [what came out](https://www.youtube.com/watch?v=Jw_qqG_obR8).
 
 And here is the complete source code:
 

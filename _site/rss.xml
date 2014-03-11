@@ -5,8 +5,8 @@
         <description>Razvan's laboratory - Razvan Dimescu</description>
         <link>http://webproworker.github.io</link>
         <link>http://webproworker.github.io</link>
-        <lastBuildDate>2014-03-11T11:17:49+02:00</lastBuildDate>
-        <pubDate>2014-03-11T11:17:49+02:00</pubDate>
+        <lastBuildDate>2014-03-11T11:29:55+02:00</lastBuildDate>
+        <pubDate>2014-03-11T11:29:55+02:00</pubDate>
         <ttl>1800</ttl>
 
 
@@ -35,8 +35,8 @@
 
 &lt;p&gt;I’ve used this tutorial to play some sounds with a piezo speaker and then I’ve changed a little bit the program to play my own baby. Since I don’t know which cord is which note (I suck reading guitar notes) I’ve used this tutorial to find what’s what.&lt;/p&gt;
 
-&lt;p&gt;This is what came out.&lt;/p&gt;
-&lt;iframe height=&#39;315&#39; src=&#39;http://www.youtube.com/embed/Jw_qqG_obR8&#39; width=&#39;420&#39;&gt;&amp;nbsp;&lt;/iframe&gt;
+&lt;p&gt;This is &lt;a href=&quot;https://www.youtube.com/watch?v=Jw_qqG_obR8&quot;&gt;what came out&lt;/a&gt;.&lt;/p&gt;
+
 &lt;p&gt;And here is the complete source code:&lt;/p&gt;
 &lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;   &lt;span class=&#39;c1&#39;&gt;#include &amp;quot;pitches.h&amp;quot;&lt;/span&gt;
   &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;notes&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;in&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
