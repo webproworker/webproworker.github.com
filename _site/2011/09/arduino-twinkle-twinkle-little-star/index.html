@@ -1,0 +1,231 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Arduino twinkle, twinkle little star</title>
+    <meta name="description" content="">
+    <meta name="author" content="Razvan Dimescu">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <header class="main">
+      <div class="container">
+        <a class="logo" href="/">Razvan's laboratory</a>
+        <div class="social">
+          <a href="mailto:razvan@dimescu.com">
+            <img alt="gmail" src="/assets/themes/twitter/img/gmail.png">
+          </a>
+          <a href="http://linkedin.com/in/razvandimescu">
+            <img alt="linkedin" src="/assets/themes/twitter/img/linked.png">
+          </a>
+          <a href="http://twitter.com/razvandimescu">
+            <img alt="twitter" src="/assets/themes/twitter/img/twitter.png">
+          </a>
+          <a href="/rss.xml">
+            <img alt="rss" src="/assets/themes/twitter/img/rss.png">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <a href="/">
+        <img src="/assets/themes/twitter/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
+      <div class="row-fluid">
+        <div class="content">
+          <div class="span8">
+            
+<article>
+  <h1>Arduino twinkle, twinkle little star </h1>
+
+  <div class="row-fluid post-full">
+    <div class="span12">
+      <header>
+        Posted on 15 September 2011
+      </header>
+      <div class="content">
+        <p>I recently bought an arduino board and yesterday I took it out for a spin.</p>
+
+<p>They have some thorough tutorials on their website here</p>
+
+<p>I’ve used this tutorial to play some sounds with a piezo speaker and then I’ve changed a little bit the program to play my own baby. Since I don’t know which cord is which note (I suck reading guitar notes) I’ve used this tutorial to find what’s what.</p>
+
+<p>This is what came out.</p>
+<iframe height='315' src='http://www.youtube.com/embed/Jw_qqG_obR8' width='420'>&nbsp;</iframe>
+<p>And here is the complete source code:</p>
+<div class='highlight'><pre><code class='ruby'>   <span class='c1'>#include &quot;pitches.h&quot;</span>
+  <span class='sr'>//</span> <span class='n'>notes</span> <span class='k'>in</span> <span class='n'>the</span> <span class='ss'>melody</span><span class='p'>:</span>
+  <span class='n'>int</span> <span class='n'>melody</span><span class='o'>[]</span> <span class='o'>=</span> <span class='p'>{</span>
+
+      <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_FS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_B4</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_FS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_B4</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>};</span>
+
+  <span class='n'>int</span> <span class='n'>noteDurations</span><span class='o'>[]</span> <span class='o'>=</span> <span class='p'>{</span>
+     <span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>};</span>
+
+  <span class='n'>void</span> <span class='n'>setup</span><span class='p'>()</span> <span class='p'>{}</span>
+
+  <span class='n'>void</span> <span class='n'>playSong</span><span class='p'>(){</span>
+    <span class='sr'>//</span> <span class='n'>iterate</span> <span class='n'>over</span> <span class='n'>the</span> <span class='n'>notes</span> <span class='n'>of</span> <span class='n'>the</span> <span class='ss'>melody</span><span class='p'>:</span>
+    <span class='k'>for</span> <span class='p'>(</span><span class='n'>int</span> <span class='n'>thisNote</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span> <span class='n'>thisNote</span> <span class='o'>&lt;</span> <span class='n'>sizeof</span><span class='p'>(</span><span class='n'>melody</span><span class='p'>)</span><span class='o'>/</span><span class='n'>sizeof</span><span class='p'>(</span><span class='n'>int</span><span class='p'>);</span> <span class='n'>thisNote</span><span class='o'>++</span><span class='p'>)</span> <span class='p'>{</span>
+
+      <span class='sr'>//</span> <span class='n'>to</span> <span class='n'>calculate</span> <span class='n'>the</span> <span class='n'>note</span> <span class='n'>duration</span><span class='p'>,</span> <span class='n'>take</span> <span class='n'>one</span> <span class='n'>second</span> <span class='n'>divided</span> <span class='n'>by</span> <span class='n'>the</span> <span class='n'>note</span> <span class='n'>type</span><span class='o'>.</span>
+      <span class='sr'>//e</span><span class='o'>.</span><span class='n'>g</span><span class='o'>.</span> <span class='n'>half</span> <span class='n'>note</span> <span class='o'>=</span> <span class='mi'>1000</span> <span class='o'>/</span> <span class='mi'>2</span>
+      <span class='n'>int</span> <span class='n'>noteDuration</span> <span class='o'>=</span> <span class='mi'>1000</span><span class='o'>/</span><span class='n'>noteDurations</span><span class='o'>[</span><span class='n'>thisNote</span><span class='o'>]</span><span class='p'>;</span>
+      <span class='n'>tone</span><span class='p'>(</span><span class='mi'>8</span><span class='p'>,</span> <span class='n'>melody</span><span class='o'>[</span><span class='n'>thisNote</span><span class='o'>]</span><span class='p'>,</span><span class='n'>noteDuration</span><span class='p'>);</span>
+
+      <span class='n'>delay</span><span class='p'>(</span><span class='n'>noteDuration</span><span class='p'>);</span>
+      <span class='sr'>//</span> <span class='n'>stop</span> <span class='n'>the</span> <span class='n'>tone</span> <span class='ss'>playing</span><span class='p'>:</span>
+      <span class='n'>noTone</span><span class='p'>(</span><span class='mi'>8</span><span class='p'>);</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+
+  <span class='n'>void</span> <span class='kp'>loop</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='n'>playSong</span><span class='p'>();</span>
+    <span class='n'>delay</span><span class='p'>(</span><span class='mi'>1000</span><span class='p'>);</span>
+  <span class='p'>}</span>
+</code></pre></div>
+      </div>
+
+    <footer>
+      
+        <ul class="categories-list">
+          <span>This entry was posted in</span>
+          <!-- <li><i class="icon-folder-open"></i></li> -->
+          
+          
+
+
+  
+     
+    	<li><a href="/categories.html#arduino-ref">
+    		arduino <span>1</span>
+    	</a></li>
+    
+  
+
+
+        </ul>
+        
+
+        
+    </footer>
+
+      <hr>
+      <div class="pagination">
+        <ul>
+        
+          <li class="prev"><a href="/2010/12/log4net-configuration" title="Log4net configuration">&larr; Previous</a></li>
+        
+          <li><a href="/archive.html">Archive</a></li>
+        
+          <li class="next"><a href="/2012/02/check-mail-from-command-line" title="Check mail from command line">Next &rarr;</a></li>
+        
+        </ul>
+      </div>
+      <hr>
+      
+    </div>
+  </div>
+</article>
+
+<div id="conversait_area"></div>
+<script type="text/javascript">
+  var conversait_sitename = "testingthis";
+  (function() {
+    var conversait = document.createElement("script"); 
+    conversait.type = "text/javascript"; 
+    conversait.async = true;
+    conversait.src = "http://cvst.chickenkiller.com:8082/web/js/embed.js";
+    (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(conversait);
+  })();
+</script>
+
+
+          </div>
+          <div class="span4">
+            <h2>Recent posts</h2>
+              <ul class="posts">  
+                  
+                   <li>
+                     <a href="/2012/02/check-mail-from-command-line">Check mail from command line</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2011/09/arduino-twinkle-twinkle-little-star">Arduino twinkle, twinkle little star</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/12/log4net-configuration">Log4net configuration</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application">How to securely call amazon webservices from a client application</a>  
+                   </li>  
+                  
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="main">
+      <div class="container">
+        &copy; 2010 - 2014 Razvan Dimescu <a href="http://creativecommons.org/licenses/by/3.0/">under creativecommons</a>
+      </div>
+    </footer>
+    
+  </body>
+</html>
+

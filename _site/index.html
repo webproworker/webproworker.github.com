@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    
+    <meta name="author" content="Razvan Dimescu">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <header class="main">
+      <div class="container">
+        <a class="logo" href="/">Razvan's laboratory</a>
+        <div class="social">
+          <a href="mailto:razvan@dimescu.com">
+            <img alt="gmail" src="/assets/themes/twitter/img/gmail.png">
+          </a>
+          <a href="http://linkedin.com/in/razvandimescu">
+            <img alt="linkedin" src="/assets/themes/twitter/img/linked.png">
+          </a>
+          <a href="http://twitter.com/razvandimescu">
+            <img alt="twitter" src="/assets/themes/twitter/img/twitter.png">
+          </a>
+          <a href="/rss.xml">
+            <img alt="rss" src="/assets/themes/twitter/img/rss.png">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <a href="/">
+        <img src="/assets/themes/twitter/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
+      <div class="row-fluid">
+        <div class="content">
+          <div class="span8">
+            
+<!-- <div class="page-header">
+  <h1> </h1>
+</div> -->
+
+<div class="row-fluid">
+  <div class="span12">
+    <article>
+  <h2><a href='/2012/02/check-mail-from-command-line'>Check mail from command line</a></h2>
+  <header>Posted on <a class='date'>20 Feb 2012</a></header>
+  <div class='content'><p>I’m not using an email client to check my mail for quite some time mainly because I don’t like being interrupted while I’m in the middle of something. Since I’m developing from a command line (guake), for convenience, I would like to check my mail without changing context so I found <a href='http://www.commandlinefu.com/commands/view/3386/check-your-unread-gmail-from-the-command-line'>this</a>:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='n'>curl</span> <span class='o'>-</span><span class='n'>u</span> <span class='n'>username</span> <span class='o'>--</span><span class='n'>silent</span> <span class='s2'>&quot;https://mail.google.com/mail/feed/atom&quot;</span> <span class='o'>|</span> <span class='n'>perl</span> <span class='o'>-</span><span class='n'>ne</span> <span class='err'>&#39;</span><span class='nb'>print</span> <span class='s2'>&quot;</span><span class='se'>\t</span><span class='s2'>&quot;</span> <span class='k'>if</span> <span class='sr'>//</span><span class='p'>;</span> <span class='nb'>print</span> <span class='s2'>&quot;$2</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='k'>if</span> <span class='sr'>/&lt;(title|name)&gt;(.*)&lt;\/\1&gt;/</span>
+</code></pre></div>
+<p>You can use username:password if you’re comfortable with storing your password in plain text.</p>
+
+<p>I’ve placed the above command in a script file added executable rights (+x) to that and I’m using it like: gmail my_account to check for incoming new mail.</p>
+
+<p>Since I’m using multiple accounts, I’ve modified the script file to include the “all” command which will check all my email accounts. Currently you’ll have to introduce your password for each account. I’ll change this in a future post so that you can “safely” store you passwords and have a master password for checking all your accounts.</p>
+
+<p>Here’s <a href='https://gist.github.com/1868462'>the script for checking multiple gmail accounts</a> by issuing the command: gmail all</p></div>
+  
+    <footer>Posted in <a href=''>bash</a></footer> 
+   
+</article><article>
+  <h2><a href='/2011/09/arduino-twinkle-twinkle-little-star'>Arduino twinkle, twinkle little star</a></h2>
+  <header>Posted on <a class='date'>15 Sep 2011</a></header>
+  <div class='content'><p>I recently bought an arduino board and yesterday I took it out for a spin.</p>
+
+<p>They have some thorough tutorials on their website here</p>
+
+<p>I’ve used this tutorial to play some sounds with a piezo speaker and then I’ve changed a little bit the program to play my own baby. Since I don’t know which cord is which note (I suck reading guitar notes) I’ve used this tutorial to find what’s what.</p>
+
+<p>This is what came out.</p>
+<iframe height='315' src='http://www.youtube.com/embed/Jw_qqG_obR8' width='420'>&nbsp;</iframe>
+<p>And here is the complete source code:</p>
+<div class='highlight'><pre><code class='ruby'>   <span class='c1'>#include &quot;pitches.h&quot;</span>
+  <span class='sr'>//</span> <span class='n'>notes</span> <span class='k'>in</span> <span class='n'>the</span> <span class='ss'>melody</span><span class='p'>:</span>
+  <span class='n'>int</span> <span class='n'>melody</span><span class='o'>[]</span> <span class='o'>=</span> <span class='p'>{</span>
+
+      <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_FS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_B4</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_B4</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_FS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_GS5</span><span class='p'>,</span> <span class='no'>N_FS5</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_E5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_DS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_CS5</span><span class='p'>,</span> <span class='no'>N_B4</span>
+    <span class='p'>,</span> <span class='no'>N_NONE</span>
+    <span class='p'>};</span>
+
+  <span class='n'>int</span> <span class='n'>noteDurations</span><span class='o'>[]</span> <span class='o'>=</span> <span class='p'>{</span>
+     <span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>4</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span><span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>,</span><span class='mi'>2</span>
+    <span class='p'>};</span>
+
+  <span class='n'>void</span> <span class='n'>setup</span><span class='p'>()</span> <span class='p'>{}</span>
+
+  <span class='n'>void</span> <span class='n'>playSong</span><span class='p'>(){</span>
+    <span class='sr'>//</span> <span class='n'>iterate</span> <span class='n'>over</span> <span class='n'>the</span> <span class='n'>notes</span> <span class='n'>of</span> <span class='n'>the</span> <span class='ss'>melody</span><span class='p'>:</span>
+    <span class='k'>for</span> <span class='p'>(</span><span class='n'>int</span> <span class='n'>thisNote</span> <span class='o'>=</span> <span class='mi'>0</span><span class='p'>;</span> <span class='n'>thisNote</span> <span class='o'>&lt;</span> <span class='n'>sizeof</span><span class='p'>(</span><span class='n'>melody</span><span class='p'>)</span><span class='o'>/</span><span class='n'>sizeof</span><span class='p'>(</span><span class='n'>int</span><span class='p'>);</span> <span class='n'>thisNote</span><span class='o'>++</span><span class='p'>)</span> <span class='p'>{</span>
+
+      <span class='sr'>//</span> <span class='n'>to</span> <span class='n'>calculate</span> <span class='n'>the</span> <span class='n'>note</span> <span class='n'>duration</span><span class='p'>,</span> <span class='n'>take</span> <span class='n'>one</span> <span class='n'>second</span> <span class='n'>divided</span> <span class='n'>by</span> <span class='n'>the</span> <span class='n'>note</span> <span class='n'>type</span><span class='o'>.</span>
+      <span class='sr'>//e</span><span class='o'>.</span><span class='n'>g</span><span class='o'>.</span> <span class='n'>half</span> <span class='n'>note</span> <span class='o'>=</span> <span class='mi'>1000</span> <span class='o'>/</span> <span class='mi'>2</span>
+      <span class='n'>int</span> <span class='n'>noteDuration</span> <span class='o'>=</span> <span class='mi'>1000</span><span class='o'>/</span><span class='n'>noteDurations</span><span class='o'>[</span><span class='n'>thisNote</span><span class='o'>]</span><span class='p'>;</span>
+      <span class='n'>tone</span><span class='p'>(</span><span class='mi'>8</span><span class='p'>,</span> <span class='n'>melody</span><span class='o'>[</span><span class='n'>thisNote</span><span class='o'>]</span><span class='p'>,</span><span class='n'>noteDuration</span><span class='p'>);</span>
+
+      <span class='n'>delay</span><span class='p'>(</span><span class='n'>noteDuration</span><span class='p'>);</span>
+      <span class='sr'>//</span> <span class='n'>stop</span> <span class='n'>the</span> <span class='n'>tone</span> <span class='ss'>playing</span><span class='p'>:</span>
+      <span class='n'>noTone</span><span class='p'>(</span><span class='mi'>8</span><span class='p'>);</span>
+    <span class='p'>}</span>
+  <span class='p'>}</span>
+
+  <span class='n'>void</span> <span class='kp'>loop</span><span class='p'>()</span> <span class='p'>{</span>
+    <span class='n'>playSong</span><span class='p'>();</span>
+    <span class='n'>delay</span><span class='p'>(</span><span class='mi'>1000</span><span class='p'>);</span>
+  <span class='p'>}</span>
+</code></pre></div></div>
+  
+    <footer>Posted in <a href=''>Arduino</a></footer> 
+   
+</article><article>
+  <h2><a href='/2010/12/log4net-configuration'>Log4net configuration</a></h2>
+  <header>Posted on <a class='date'>13 Dec 2010</a></header>
+  <div class='content'><p>I always forget how to configure log4net to enable it’s powerful logging capabilities. So here’s how:</p>
+
+<p>For web applications: in your global.aspx file, when the application starts, add this line: XmlConfiguration.Configure();</p>
+
+<p>For desktop applications add the same line in the main function.</p>
+
+<p>ex:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='kp'>protected</span> <span class='n'>void</span> <span class='no'>Application_Start</span><span class='p'>()</span>
+  <span class='p'>{</span>
+  <span class='no'>XmlConfigurator</span><span class='o'>.</span><span class='n'>Configure</span><span class='p'>();</span>
+  <span class='p'>}</span>
+</code></pre></div>
+<p>In web.config / app.config add this configuration:</p>
+
+<p>Declare the section in the section configuration</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='o'>&lt;</span><span class='n'>configSections</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>section</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='err'>”</span> <span class='n'>type</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='o'>.</span><span class='n'>Config</span><span class='o'>.</span><span class='n'>Log4NetConfigurationSectionHandler</span><span class='p'>,</span> <span class='n'>log4net</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>configSections</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>Configure the logger for file logging:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='o'>&lt;</span><span class='n'>log4net</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>appender</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>LogFileAppender</span><span class='err'>”</span> <span class='n'>type</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='o'>.</span><span class='n'>Appender</span><span class='o'>.</span><span class='n'>FileAppender</span><span class='err'>”</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>param</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>File</span><span class='err'>”</span> <span class='n'>value</span><span class='o'>=</span><span class='err'>”</span><span class='no'>Logs</span><span class='p'>\\</span><span class='no'>Log4Net</span><span class='o'>.</span><span class='n'>log</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;layout type=”log4net.Layout.PatternLayout”&gt;</span>
+<span class='sr'>  &lt;param name=”ConversionPattern” value=”%d [%t] %-5p %c %m%n” /</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='sr'>/layout&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>appender</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>logger</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>File</span><span class='err'>”</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>level</span> <span class='n'>value</span><span class='o'>=</span><span class='err'>”</span><span class='no'>All</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;appender-ref ref=”LogFileAppender” /</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='sr'>/logger&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>log4net</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>That’s it, hope this helps!</p></div>
+   
+</article><article>
+  <h2><a href='/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application'>How to securely call amazon webservices from a client application</a></h2>
+  <header>Posted on <a class='date'>19 Oct 2010</a></header>
+  <div class='content'><p>If you are going to use the amazon sdk in order to create calls to s3 or other amazon web service, you will notice that in order to upload files or create get requests you have to work with an object that requires your accessKeyID and secretAccessKeyID.</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>Amazon</span><span class='o'>.</span><span class='n'>AWSClientFactory</span><span class='o'>.</span><span class='n'>CreateAmazonS3Client</span><span class='p'>(</span><span class='n'>accessKeyID</span><span class='p'>,</span> <span class='n'>secretAccessKeyID</span><span class='p'>)</span>
+</code></pre></div>
+<p>The problem is that since this is a client application, you will have to give your password to client applications in order to create calls using the amazon sdk. However, this is not safe at all. Even if you encrypt your password it’s only a matter of time until some evil hacker decrypts it and you don’t want to pay for illegal stuff hosted in your bucket.</p>
+
+<p>There are two solutions in order to avoid this:</p>
+
+<ol>
+<li>
+<p>Create a proxy that fronts the remote AWS service (however this is not recommended)</p>
+</li>
+
+<li>
+<p>Create a signed request to your server, sending all the details needed so that you can generate the authentication string and then send back the authentication string to your client in order to complete the request header. Here’s how it works</p>
+</li>
+</ol>
+
+<p>If you want to upload a file to amazon s3 this is how your request looks like:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>PUT</span> <span class='sr'>/my-image.jpg HTTP/</span><span class='mi'>1</span><span class='o'>.</span><span class='mi'>1</span>
+  <span class='ss'>Host</span><span class='p'>:</span> <span class='n'>myBucket</span><span class='o'>.</span><span class='n'>s3</span><span class='o'>.</span><span class='n'>amazonaws</span><span class='o'>.</span><span class='n'>com</span>
+  <span class='ss'>Date</span><span class='p'>:</span> <span class='no'>Wed</span><span class='p'>,</span> <span class='mi'>12</span> <span class='no'>Oct</span> <span class='mi'>2009</span> <span class='mi'>17</span><span class='p'>:</span><span class='mi'>50</span><span class='p'>:</span><span class='mo'>00</span> <span class='no'>GMT</span>
+  <span class='ss'>Authorization</span><span class='p'>:</span> <span class='no'>AWS</span> <span class='mi'>15</span><span class='ss'>B4D3461F177624206A</span><span class='p'>:</span><span class='n'>xQE0diMbLRepdf3YB</span><span class='o'>+</span><span class='no'>FIEXAMPLE</span><span class='o'>=</span>
+  <span class='no'>Content</span><span class='o'>-</span><span class='ss'>Type</span><span class='p'>:</span> <span class='n'>text</span><span class='o'>/</span><span class='n'>plain</span>
+  <span class='no'>Content</span><span class='o'>-</span><span class='ss'>Length</span><span class='p'>:</span> <span class='mi'>11434</span>
+  <span class='ss'>Expect</span><span class='p'>:</span> <span class='mi'>100</span><span class='o'>-</span><span class='n'>continue</span>
+  <span class='o'>[</span><span class='mi'>11434</span> <span class='n'>bytes</span> <span class='n'>of</span> <span class='n'>object</span> <span class='n'>data</span><span class='o'>]</span>
+</code></pre></div>
+<p>We can clearly notice the only thing that authenticates our request is the following line:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='ss'>Authorization</span><span class='p'>:</span> <span class='no'>AWS</span> <span class='mi'>15</span><span class='ss'>B4D3461F177624206A</span><span class='p'>:</span><span class='n'>xQE0diMbLRepdf3YB</span><span class='o'>+</span><span class='no'>FIEXAMPLE</span><span class='o'>=</span>
+</code></pre></div>
+<p>Here is how the authorization string can be created:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>Authorization</span> <span class='o'>=</span> <span class='s2'>&quot;AWS&quot;</span> <span class='o'>+</span> <span class='s2'>&quot; &quot;</span> <span class='o'>+</span> <span class='no'>AWSAccessKeyId</span> <span class='o'>+</span> <span class='s2'>&quot;:&quot;</span> <span class='o'>+</span> <span class='no'>Signature</span><span class='p'>;</span>
+
+  <span class='no'>Signature</span> <span class='o'>=</span> <span class='no'>Base64</span><span class='p'>(</span> <span class='no'>HMAC</span><span class='o'>-</span><span class='no'>SHA1</span><span class='p'>(</span> <span class='no'>UTF</span><span class='o'>-</span><span class='mi'>8</span><span class='o'>-</span><span class='no'>Encoding</span><span class='o'>-</span><span class='no'>Of</span><span class='p'>(</span>
+                                  <span class='no'>YourSecretAccessKeyID</span><span class='p'>,</span> <span class='no'>StringToSign</span> <span class='p'>)</span> <span class='p'>)</span> <span class='p'>);</span>
+
+  <span class='no'>StringToSign</span> <span class='o'>=</span> <span class='no'>HTTP</span><span class='o'>-</span><span class='no'>Verb</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Content</span><span class='o'>-</span><span class='no'>MD5</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Content</span><span class='o'>-</span><span class='no'>Type</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Date</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>CanonicalizedAmzHeaders</span> <span class='o'>+</span>
+    <span class='no'>CanonicalizedResource</span><span class='p'>;</span>
+
+  <span class='no'>CanonicalizedResource</span> <span class='o'>=</span> <span class='o'>[</span> <span class='s2'>&quot;/&quot;</span> <span class='o'>+</span> <span class='no'>Bucket</span> <span class='o'>]</span> <span class='o'>+</span>
+    <span class='o'>&lt;</span><span class='no'>HTTP</span><span class='o'>-</span><span class='no'>Request</span><span class='o'>-</span><span class='no'>URI</span><span class='p'>,</span> <span class='n'>from</span> <span class='n'>the</span> <span class='n'>protocol</span> <span class='nb'>name</span> <span class='n'>up</span> <span class='n'>to</span> <span class='n'>the</span> <span class='n'>query</span> <span class='n'>string</span><span class='o'>&gt;</span> <span class='o'>+</span>
+    <span class='o'>[</span> <span class='nb'>sub</span><span class='o'>-</span><span class='n'>resource</span><span class='p'>,</span> <span class='k'>if</span> <span class='n'>present</span><span class='o'>.</span>
+          <span class='no'>For</span> <span class='n'>example</span> <span class='s2'>&quot;?acl&quot;</span><span class='p'>,</span> <span class='s2'>&quot;?location&quot;</span><span class='p'>,</span> <span class='s2'>&quot;?logging&quot;</span><span class='p'>,</span> <span class='ow'>or</span> <span class='s2'>&quot;?torrent&quot;</span><span class='o'>]</span><span class='p'>;</span>
+
+  <span class='no'>CanonicalizedAmzHeaders</span> <span class='o'>=</span> <span class='o'>&lt;</span><span class='n'>described</span> <span class='n'>below</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>What this means is that we just have to send the details about the file we want to upload to our website, where we will calculate the authorization string, then, we can use the authorization string to complete the request from our client application.</p></div>
+   
+</article>
+  </div>
+</div>
+
+
+          </div>
+          <div class="span4">
+            <h2>Recent posts</h2>
+              <ul class="posts">  
+                  
+                   <li>
+                     <a href="/2012/02/check-mail-from-command-line">Check mail from command line</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2011/09/arduino-twinkle-twinkle-little-star">Arduino twinkle, twinkle little star</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/12/log4net-configuration">Log4net configuration</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application">How to securely call amazon webservices from a client application</a>  
+                   </li>  
+                  
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="main">
+      <div class="container">
+        &copy; 2010 - 2014 Razvan Dimescu <a href="http://creativecommons.org/licenses/by/3.0/">under creativecommons</a>
+      </div>
+    </footer>
+    
+  </body>
+</html>
+

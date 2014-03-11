@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>How to securely call amazon webservices from a client application</title>
+    <meta name="description" content="">
+    <meta name="author" content="Razvan Dimescu">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <header class="main">
+      <div class="container">
+        <a class="logo" href="/">Razvan's laboratory</a>
+        <div class="social">
+          <a href="mailto:razvan@dimescu.com">
+            <img alt="gmail" src="/assets/themes/twitter/img/gmail.png">
+          </a>
+          <a href="http://linkedin.com/in/razvandimescu">
+            <img alt="linkedin" src="/assets/themes/twitter/img/linked.png">
+          </a>
+          <a href="http://twitter.com/razvandimescu">
+            <img alt="twitter" src="/assets/themes/twitter/img/twitter.png">
+          </a>
+          <a href="/rss.xml">
+            <img alt="rss" src="/assets/themes/twitter/img/rss.png">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <a href="/">
+        <img src="/assets/themes/twitter/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
+      <div class="row-fluid">
+        <div class="content">
+          <div class="span8">
+            
+<article>
+  <h1>How to securely call amazon webservices from a client application </h1>
+
+  <div class="row-fluid post-full">
+    <div class="span12">
+      <header>
+        Posted on 19 October 2010
+      </header>
+      <div class="content">
+        <p>If you are going to use the amazon sdk in order to create calls to s3 or other amazon web service, you will notice that in order to upload files or create get requests you have to work with an object that requires your accessKeyID and secretAccessKeyID.</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>Amazon</span><span class='o'>.</span><span class='n'>AWSClientFactory</span><span class='o'>.</span><span class='n'>CreateAmazonS3Client</span><span class='p'>(</span><span class='n'>accessKeyID</span><span class='p'>,</span> <span class='n'>secretAccessKeyID</span><span class='p'>)</span>
+</code></pre></div>
+<p>The problem is that since this is a client application, you will have to give your password to client applications in order to create calls using the amazon sdk. However, this is not safe at all. Even if you encrypt your password it’s only a matter of time until some evil hacker decrypts it and you don’t want to pay for illegal stuff hosted in your bucket.</p>
+
+<p>There are two solutions in order to avoid this:</p>
+
+<ol>
+<li>
+<p>Create a proxy that fronts the remote AWS service (however this is not recommended)</p>
+</li>
+
+<li>
+<p>Create a signed request to your server, sending all the details needed so that you can generate the authentication string and then send back the authentication string to your client in order to complete the request header. Here’s how it works</p>
+</li>
+</ol>
+
+<p>If you want to upload a file to amazon s3 this is how your request looks like:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>PUT</span> <span class='sr'>/my-image.jpg HTTP/</span><span class='mi'>1</span><span class='o'>.</span><span class='mi'>1</span>
+  <span class='ss'>Host</span><span class='p'>:</span> <span class='n'>myBucket</span><span class='o'>.</span><span class='n'>s3</span><span class='o'>.</span><span class='n'>amazonaws</span><span class='o'>.</span><span class='n'>com</span>
+  <span class='ss'>Date</span><span class='p'>:</span> <span class='no'>Wed</span><span class='p'>,</span> <span class='mi'>12</span> <span class='no'>Oct</span> <span class='mi'>2009</span> <span class='mi'>17</span><span class='p'>:</span><span class='mi'>50</span><span class='p'>:</span><span class='mo'>00</span> <span class='no'>GMT</span>
+  <span class='ss'>Authorization</span><span class='p'>:</span> <span class='no'>AWS</span> <span class='mi'>15</span><span class='ss'>B4D3461F177624206A</span><span class='p'>:</span><span class='n'>xQE0diMbLRepdf3YB</span><span class='o'>+</span><span class='no'>FIEXAMPLE</span><span class='o'>=</span>
+  <span class='no'>Content</span><span class='o'>-</span><span class='ss'>Type</span><span class='p'>:</span> <span class='n'>text</span><span class='o'>/</span><span class='n'>plain</span>
+  <span class='no'>Content</span><span class='o'>-</span><span class='ss'>Length</span><span class='p'>:</span> <span class='mi'>11434</span>
+  <span class='ss'>Expect</span><span class='p'>:</span> <span class='mi'>100</span><span class='o'>-</span><span class='n'>continue</span>
+  <span class='o'>[</span><span class='mi'>11434</span> <span class='n'>bytes</span> <span class='n'>of</span> <span class='n'>object</span> <span class='n'>data</span><span class='o'>]</span>
+</code></pre></div>
+<p>We can clearly notice the only thing that authenticates our request is the following line:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='ss'>Authorization</span><span class='p'>:</span> <span class='no'>AWS</span> <span class='mi'>15</span><span class='ss'>B4D3461F177624206A</span><span class='p'>:</span><span class='n'>xQE0diMbLRepdf3YB</span><span class='o'>+</span><span class='no'>FIEXAMPLE</span><span class='o'>=</span>
+</code></pre></div>
+<p>Here is how the authorization string can be created:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='no'>Authorization</span> <span class='o'>=</span> <span class='s2'>&quot;AWS&quot;</span> <span class='o'>+</span> <span class='s2'>&quot; &quot;</span> <span class='o'>+</span> <span class='no'>AWSAccessKeyId</span> <span class='o'>+</span> <span class='s2'>&quot;:&quot;</span> <span class='o'>+</span> <span class='no'>Signature</span><span class='p'>;</span>
+
+  <span class='no'>Signature</span> <span class='o'>=</span> <span class='no'>Base64</span><span class='p'>(</span> <span class='no'>HMAC</span><span class='o'>-</span><span class='no'>SHA1</span><span class='p'>(</span> <span class='no'>UTF</span><span class='o'>-</span><span class='mi'>8</span><span class='o'>-</span><span class='no'>Encoding</span><span class='o'>-</span><span class='no'>Of</span><span class='p'>(</span>
+                                  <span class='no'>YourSecretAccessKeyID</span><span class='p'>,</span> <span class='no'>StringToSign</span> <span class='p'>)</span> <span class='p'>)</span> <span class='p'>);</span>
+
+  <span class='no'>StringToSign</span> <span class='o'>=</span> <span class='no'>HTTP</span><span class='o'>-</span><span class='no'>Verb</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Content</span><span class='o'>-</span><span class='no'>MD5</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Content</span><span class='o'>-</span><span class='no'>Type</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>Date</span> <span class='o'>+</span> <span class='s2'>&quot;</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='o'>+</span>
+    <span class='no'>CanonicalizedAmzHeaders</span> <span class='o'>+</span>
+    <span class='no'>CanonicalizedResource</span><span class='p'>;</span>
+
+  <span class='no'>CanonicalizedResource</span> <span class='o'>=</span> <span class='o'>[</span> <span class='s2'>&quot;/&quot;</span> <span class='o'>+</span> <span class='no'>Bucket</span> <span class='o'>]</span> <span class='o'>+</span>
+    <span class='o'>&lt;</span><span class='no'>HTTP</span><span class='o'>-</span><span class='no'>Request</span><span class='o'>-</span><span class='no'>URI</span><span class='p'>,</span> <span class='n'>from</span> <span class='n'>the</span> <span class='n'>protocol</span> <span class='nb'>name</span> <span class='n'>up</span> <span class='n'>to</span> <span class='n'>the</span> <span class='n'>query</span> <span class='n'>string</span><span class='o'>&gt;</span> <span class='o'>+</span>
+    <span class='o'>[</span> <span class='nb'>sub</span><span class='o'>-</span><span class='n'>resource</span><span class='p'>,</span> <span class='k'>if</span> <span class='n'>present</span><span class='o'>.</span>
+          <span class='no'>For</span> <span class='n'>example</span> <span class='s2'>&quot;?acl&quot;</span><span class='p'>,</span> <span class='s2'>&quot;?location&quot;</span><span class='p'>,</span> <span class='s2'>&quot;?logging&quot;</span><span class='p'>,</span> <span class='ow'>or</span> <span class='s2'>&quot;?torrent&quot;</span><span class='o'>]</span><span class='p'>;</span>
+
+  <span class='no'>CanonicalizedAmzHeaders</span> <span class='o'>=</span> <span class='o'>&lt;</span><span class='n'>described</span> <span class='n'>below</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>What this means is that we just have to send the details about the file we want to upload to our website, where we will calculate the authorization string, then, we can use the authorization string to complete the request from our client application.</p>
+      </div>
+
+    <footer>
+        
+
+        
+    </footer>
+
+      <hr>
+      <div class="pagination">
+        <ul>
+        
+          <li class="prev disabled"><a>&larr; Previous</a></li>
+        
+          <li><a href="/archive.html">Archive</a></li>
+        
+          <li class="next"><a href="/2010/12/log4net-configuration" title="Log4net configuration">Next &rarr;</a></li>
+        
+        </ul>
+      </div>
+      <hr>
+      
+    </div>
+  </div>
+</article>
+
+<div id="conversait_area"></div>
+<script type="text/javascript">
+  var conversait_sitename = "testingthis";
+  (function() {
+    var conversait = document.createElement("script"); 
+    conversait.type = "text/javascript"; 
+    conversait.async = true;
+    conversait.src = "http://cvst.chickenkiller.com:8082/web/js/embed.js";
+    (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(conversait);
+  })();
+</script>
+
+
+          </div>
+          <div class="span4">
+            <h2>Recent posts</h2>
+              <ul class="posts">  
+                  
+                   <li>
+                     <a href="/2012/02/check-mail-from-command-line">Check mail from command line</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2011/09/arduino-twinkle-twinkle-little-star">Arduino twinkle, twinkle little star</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/12/log4net-configuration">Log4net configuration</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application">How to securely call amazon webservices from a client application</a>  
+                   </li>  
+                  
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="main">
+      <div class="container">
+        &copy; 2010 - 2014 Razvan Dimescu <a href="http://creativecommons.org/licenses/by/3.0/">under creativecommons</a>
+      </div>
+    </footer>
+    
+  </body>
+</html>
+

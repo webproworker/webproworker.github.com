@@ -1,0 +1,183 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Log4net configuration</title>
+    <meta name="description" content="">
+    <meta name="author" content="Razvan Dimescu">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <header class="main">
+      <div class="container">
+        <a class="logo" href="/">Razvan's laboratory</a>
+        <div class="social">
+          <a href="mailto:razvan@dimescu.com">
+            <img alt="gmail" src="/assets/themes/twitter/img/gmail.png">
+          </a>
+          <a href="http://linkedin.com/in/razvandimescu">
+            <img alt="linkedin" src="/assets/themes/twitter/img/linked.png">
+          </a>
+          <a href="http://twitter.com/razvandimescu">
+            <img alt="twitter" src="/assets/themes/twitter/img/twitter.png">
+          </a>
+          <a href="/rss.xml">
+            <img alt="rss" src="/assets/themes/twitter/img/rss.png">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <a href="/">
+        <img src="/assets/themes/twitter/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
+      <div class="row-fluid">
+        <div class="content">
+          <div class="span8">
+            
+<article>
+  <h1>Log4net configuration </h1>
+
+  <div class="row-fluid post-full">
+    <div class="span12">
+      <header>
+        Posted on 13 December 2010
+      </header>
+      <div class="content">
+        <p>I always forget how to configure log4net to enable it’s powerful logging capabilities. So here’s how:</p>
+
+<p>For web applications: in your global.aspx file, when the application starts, add this line: XmlConfiguration.Configure();</p>
+
+<p>For desktop applications add the same line in the main function.</p>
+
+<p>ex:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='kp'>protected</span> <span class='n'>void</span> <span class='no'>Application_Start</span><span class='p'>()</span>
+  <span class='p'>{</span>
+  <span class='no'>XmlConfigurator</span><span class='o'>.</span><span class='n'>Configure</span><span class='p'>();</span>
+  <span class='p'>}</span>
+</code></pre></div>
+<p>In web.config / app.config add this configuration:</p>
+
+<p>Declare the section in the section configuration</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='o'>&lt;</span><span class='n'>configSections</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>section</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='err'>”</span> <span class='n'>type</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='o'>.</span><span class='n'>Config</span><span class='o'>.</span><span class='n'>Log4NetConfigurationSectionHandler</span><span class='p'>,</span> <span class='n'>log4net</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>configSections</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>Configure the logger for file logging:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='o'>&lt;</span><span class='n'>log4net</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>appender</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>LogFileAppender</span><span class='err'>”</span> <span class='n'>type</span><span class='o'>=</span><span class='err'>”</span><span class='n'>log4net</span><span class='o'>.</span><span class='n'>Appender</span><span class='o'>.</span><span class='n'>FileAppender</span><span class='err'>”</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>param</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>File</span><span class='err'>”</span> <span class='n'>value</span><span class='o'>=</span><span class='err'>”</span><span class='no'>Logs</span><span class='p'>\\</span><span class='no'>Log4Net</span><span class='o'>.</span><span class='n'>log</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;layout type=”log4net.Layout.PatternLayout”&gt;</span>
+<span class='sr'>  &lt;param name=”ConversionPattern” value=”%d [%t] %-5p %c %m%n” /</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='sr'>/layout&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>appender</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>logger</span> <span class='nb'>name</span><span class='o'>=</span><span class='err'>”</span><span class='no'>File</span><span class='err'>”</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='n'>level</span> <span class='n'>value</span><span class='o'>=</span><span class='err'>”</span><span class='no'>All</span><span class='err'>”</span> <span class='sr'>/&gt;</span>
+<span class='sr'>  &lt;appender-ref ref=”LogFileAppender” /</span><span class='o'>&gt;</span>
+  <span class='o'>&lt;</span><span class='sr'>/logger&gt;</span>
+<span class='sr'>  &lt;/</span><span class='n'>log4net</span><span class='o'>&gt;</span>
+</code></pre></div>
+<p>That’s it, hope this helps!</p>
+      </div>
+
+    <footer>
+        
+
+        
+    </footer>
+
+      <hr>
+      <div class="pagination">
+        <ul>
+        
+          <li class="prev"><a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application" title="How to securely call amazon webservices from a client application">&larr; Previous</a></li>
+        
+          <li><a href="/archive.html">Archive</a></li>
+        
+          <li class="next"><a href="/2011/09/arduino-twinkle-twinkle-little-star" title="Arduino twinkle, twinkle little star">Next &rarr;</a></li>
+        
+        </ul>
+      </div>
+      <hr>
+      
+    </div>
+  </div>
+</article>
+
+<div id="conversait_area"></div>
+<script type="text/javascript">
+  var conversait_sitename = "testingthis";
+  (function() {
+    var conversait = document.createElement("script"); 
+    conversait.type = "text/javascript"; 
+    conversait.async = true;
+    conversait.src = "http://cvst.chickenkiller.com:8082/web/js/embed.js";
+    (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(conversait);
+  })();
+</script>
+
+
+          </div>
+          <div class="span4">
+            <h2>Recent posts</h2>
+              <ul class="posts">  
+                  
+                   <li>
+                     <a href="/2012/02/check-mail-from-command-line">Check mail from command line</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2011/09/arduino-twinkle-twinkle-little-star">Arduino twinkle, twinkle little star</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/12/log4net-configuration">Log4net configuration</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application">How to securely call amazon webservices from a client application</a>  
+                   </li>  
+                  
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="main">
+      <div class="container">
+        &copy; 2010 - 2014 Razvan Dimescu <a href="http://creativecommons.org/licenses/by/3.0/">under creativecommons</a>
+      </div>
+    </footer>
+    
+  </body>
+</html>
+

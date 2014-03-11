@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0">
+<channel>
+        <title>Razvan's laboratory</title>
+        <description>Razvan's laboratory - Razvan Dimescu</description>
+        <link>http://webproworker.github.io</link>
+        <link>http://webproworker.github.io</link>
+        <lastBuildDate>2014-03-11T11:17:49+02:00</lastBuildDate>
+        <pubDate>2014-03-11T11:17:49+02:00</pubDate>
+        <ttl>1800</ttl>
+
+
+        <item>
+                <title>Check mail from command line</title>
+                <description>&lt;p&gt;I’m not using an email client to check my mail for quite some time mainly because I don’t like being interrupted while I’m in the middle of something. Since I’m developing from a command line (guake), for convenience, I would like to check my mail without changing context so I found &lt;a href=&quot;http://www.commandlinefu.com/commands/view/3386/check-your-unread-gmail-from-the-command-line&quot;&gt;this&lt;/a&gt;:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;n&#39;&gt;curl&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;u&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;username&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;--&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;silent&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;https://mail.google.com/mail/feed/atom&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;|&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;perl&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;ne&lt;/span&gt; &lt;span class=&#39;err&#39;&gt;&amp;#39;&lt;/span&gt;&lt;span class=&#39;nb&#39;&gt;print&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\t&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;print&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;$2&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\n&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;/&amp;lt;(title|name)&amp;gt;(.*)&amp;lt;\/\1&amp;gt;/&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;You can use username:password if you’re comfortable with storing your password in plain text.&lt;/p&gt;
+
+&lt;p&gt;I’ve placed the above command in a script file added executable rights (+x) to that and I’m using it like: gmail my_account to check for incoming new mail.&lt;/p&gt;
+
+&lt;p&gt;Since I’m using multiple accounts, I’ve modified the script file to include the “all” command which will check all my email accounts. Currently you’ll have to introduce your password for each account. I’ll change this in a future post so that you can “safely” store you passwords and have a master password for checking all your accounts.&lt;/p&gt;
+
+&lt;p&gt;Here’s &lt;a href=&quot;https://gist.github.com/1868462&quot;&gt;the script for checking multiple gmail accounts&lt;/a&gt; by issuing the command: gmail all&lt;/p&gt;</description>
+                <link>http://webproworker.github.io/2012/02/check-mail-from-command-line</link>
+                <guid>http://webproworker.github.io/2012/02/check-mail-from-command-line</guid>
+                <pubDate>2012-02-20T00:00:00+02:00</pubDate>
+        </item>
+
+        <item>
+                <title>Arduino twinkle, twinkle little star</title>
+                <description>&lt;p&gt;I recently bought an arduino board and yesterday I took it out for a spin.&lt;/p&gt;
+
+&lt;p&gt;They have some thorough tutorials on their website here&lt;/p&gt;
+
+&lt;p&gt;I’ve used this tutorial to play some sounds with a piezo speaker and then I’ve changed a little bit the program to play my own baby. Since I don’t know which cord is which note (I suck reading guitar notes) I’ve used this tutorial to find what’s what.&lt;/p&gt;
+
+&lt;p&gt;This is what came out.&lt;/p&gt;
+&lt;iframe height=&#39;315&#39; src=&#39;http://www.youtube.com/embed/Jw_qqG_obR8&#39; width=&#39;420&#39;&gt;&amp;nbsp;&lt;/iframe&gt;
+&lt;p&gt;And here is the complete source code:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;   &lt;span class=&#39;c1&#39;&gt;#include &amp;quot;pitches.h&amp;quot;&lt;/span&gt;
+  &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;notes&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;in&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
+  &lt;span class=&#39;n&#39;&gt;int&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;[]&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+
+      &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_GS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_GS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_GS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_GS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_FS5&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_E5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_DS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_CS5&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_B4&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;N_NONE&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+
+  &lt;span class=&#39;n&#39;&gt;int&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;noteDurations&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;[]&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+     &lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;4&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;};&lt;/span&gt;
+
+  &lt;span class=&#39;n&#39;&gt;void&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;setup&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{}&lt;/span&gt;
+
+  &lt;span class=&#39;n&#39;&gt;void&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;playSong&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(){&lt;/span&gt;
+    &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;iterate&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;over&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;notes&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;of&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
+    &lt;span class=&#39;k&#39;&gt;for&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;int&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;thisNote&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;0&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;thisNote&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;sizeof&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;sizeof&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;int&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;thisNote&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;++&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+
+      &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;to&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;calculate&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;note&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;duration&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;take&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;one&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;second&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;divided&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;by&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;note&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;type&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;
+      &lt;span class=&#39;sr&#39;&gt;//e&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;g&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;half&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;note&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;1000&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;/&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;2&lt;/span&gt;
+      &lt;span class=&#39;n&#39;&gt;int&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;noteDuration&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;1000&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;noteDurations&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;thisNote&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;]&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+      &lt;span class=&#39;n&#39;&gt;tone&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;8&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;melody&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;thisNote&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;]&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;noteDuration&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+
+      &lt;span class=&#39;n&#39;&gt;delay&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;noteDuration&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+      &lt;span class=&#39;sr&#39;&gt;//&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;stop&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;tone&lt;/span&gt; &lt;span class=&#39;ss&#39;&gt;playing&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;
+      &lt;span class=&#39;n&#39;&gt;noTone&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;8&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+    &lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+
+  &lt;span class=&#39;n&#39;&gt;void&lt;/span&gt; &lt;span class=&#39;kp&#39;&gt;loop&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+    &lt;span class=&#39;n&#39;&gt;playSong&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;();&lt;/span&gt;
+    &lt;span class=&#39;n&#39;&gt;delay&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;1000&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+                <link>http://webproworker.github.io/2011/09/arduino-twinkle-twinkle-little-star</link>
+                <guid>http://webproworker.github.io/2011/09/arduino-twinkle-twinkle-little-star</guid>
+                <pubDate>2011-09-15T00:00:00+03:00</pubDate>
+        </item>
+
+        <item>
+                <title>Log4net configuration</title>
+                <description>&lt;p&gt;I always forget how to configure log4net to enable it’s powerful logging capabilities. So here’s how:&lt;/p&gt;
+
+&lt;p&gt;For web applications: in your global.aspx file, when the application starts, add this line: XmlConfiguration.Configure();&lt;/p&gt;
+
+&lt;p&gt;For desktop applications add the same line in the main function.&lt;/p&gt;
+
+&lt;p&gt;ex:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;kp&#39;&gt;protected&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;void&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Application_Start&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;()&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;{&lt;/span&gt;
+  &lt;span class=&#39;no&#39;&gt;XmlConfigurator&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Configure&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;();&lt;/span&gt;
+  &lt;span class=&#39;p&#39;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;In web.config / app.config add this configuration:&lt;/p&gt;
+
+&lt;p&gt;Declare the section in the section configuration&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;configSections&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;section&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;type&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Config&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Log4NetConfigurationSectionHandler&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;configSections&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Configure the logger for file logging:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;appender&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;LogFileAppender&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;type&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;Appender&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;FileAppender&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;param&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;File&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;value&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Logs&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;\\&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Log4Net&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;layout type=”log4net.Layout.PatternLayout”&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;param name=”ConversionPattern” value=”%d [%t] %-5p %c %m%n” /&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;sr&#39;&gt;/layout&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;appender&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;logger&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;name&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;File&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;level&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;value&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;All&lt;/span&gt;&lt;span class=&#39;err&#39;&gt;”&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;appender-ref ref=”LogFileAppender” /&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;sr&#39;&gt;/logger&amp;gt;&lt;/span&gt;
+&lt;span class=&#39;sr&#39;&gt;  &amp;lt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;log4net&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;That’s it, hope this helps!&lt;/p&gt;</description>
+                <link>http://webproworker.github.io/2010/12/log4net-configuration</link>
+                <guid>http://webproworker.github.io/2010/12/log4net-configuration</guid>
+                <pubDate>2010-12-13T00:00:00+02:00</pubDate>
+        </item>
+
+        <item>
+                <title>How to securely call amazon webservices from a client application</title>
+                <description>&lt;p&gt;If you are going to use the amazon sdk in order to create calls to s3 or other amazon web service, you will notice that in order to upload files or create get requests you have to work with an object that requires your accessKeyID and secretAccessKeyID.&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;no&#39;&gt;Amazon&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;AWSClientFactory&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;CreateAmazonS3Client&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;accessKeyID&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;secretAccessKeyID&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;The problem is that since this is a client application, you will have to give your password to client applications in order to create calls using the amazon sdk. However, this is not safe at all. Even if you encrypt your password it’s only a matter of time until some evil hacker decrypts it and you don’t want to pay for illegal stuff hosted in your bucket.&lt;/p&gt;
+
+&lt;p&gt;There are two solutions in order to avoid this:&lt;/p&gt;
+
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;Create a proxy that fronts the remote AWS service (however this is not recommended)&lt;/p&gt;
+&lt;/li&gt;
+
+&lt;li&gt;
+&lt;p&gt;Create a signed request to your server, sending all the details needed so that you can generate the authentication string and then send back the authentication string to your client in order to complete the request header. Here’s how it works&lt;/p&gt;
+&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;If you want to upload a file to amazon s3 this is how your request looks like:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;no&#39;&gt;PUT&lt;/span&gt; &lt;span class=&#39;sr&#39;&gt;/my-image.jpg HTTP/&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;1&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;1&lt;/span&gt;
+  &lt;span class=&#39;ss&#39;&gt;Host&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;myBucket&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;s3&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;amazonaws&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;com&lt;/span&gt;
+  &lt;span class=&#39;ss&#39;&gt;Date&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Wed&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;12&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Oct&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;2009&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;17&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;50&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;mo&#39;&gt;00&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;GMT&lt;/span&gt;
+  &lt;span class=&#39;ss&#39;&gt;Authorization&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;AWS&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;15&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;B4D3461F177624206A&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;xQE0diMbLRepdf3YB&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;FIEXAMPLE&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;
+  &lt;span class=&#39;no&#39;&gt;Content&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;Type&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;text&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;/&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;plain&lt;/span&gt;
+  &lt;span class=&#39;no&#39;&gt;Content&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;Length&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;11434&lt;/span&gt;
+  &lt;span class=&#39;ss&#39;&gt;Expect&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;100&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;continue&lt;/span&gt;
+  &lt;span class=&#39;o&#39;&gt;[&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;11434&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;bytes&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;of&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;object&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;data&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;We can clearly notice the only thing that authenticates our request is the following line:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;ss&#39;&gt;Authorization&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;AWS&lt;/span&gt; &lt;span class=&#39;mi&#39;&gt;15&lt;/span&gt;&lt;span class=&#39;ss&#39;&gt;B4D3461F177624206A&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;:&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;xQE0diMbLRepdf3YB&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;FIEXAMPLE&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;=&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Here is how the authorization string can be created:&lt;/p&gt;
+&lt;div class=&#39;highlight&#39;&gt;&lt;pre&gt;&lt;code class=&#39;ruby&#39;&gt;  &lt;span class=&#39;no&#39;&gt;Authorization&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;AWS&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot; &amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;AWSAccessKeyId&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;:&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Signature&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+  &lt;span class=&#39;no&#39;&gt;Signature&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Base64&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;HMAC&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;SHA1&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;UTF&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;mi&#39;&gt;8&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Encoding&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Of&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;(&lt;/span&gt;
+                                  &lt;span class=&#39;no&#39;&gt;YourSecretAccessKeyID&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;StringToSign&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;)&lt;/span&gt; &lt;span class=&#39;p&#39;&gt;);&lt;/span&gt;
+
+  &lt;span class=&#39;no&#39;&gt;StringToSign&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;HTTP&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Verb&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\n&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;no&#39;&gt;Content&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;MD5&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\n&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;no&#39;&gt;Content&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Type&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\n&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;no&#39;&gt;Date&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt;&lt;span class=&#39;se&#39;&gt;\n&lt;/span&gt;&lt;span class=&#39;s2&#39;&gt;&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;no&#39;&gt;CanonicalizedAmzHeaders&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;no&#39;&gt;CanonicalizedResource&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+  &lt;span class=&#39;no&#39;&gt;CanonicalizedResource&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;[&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;/&amp;quot;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt; &lt;span class=&#39;no&#39;&gt;Bucket&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;]&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;HTTP&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;Request&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;no&#39;&gt;URI&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;from&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;protocol&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;name&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;up&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;to&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;the&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;query&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;string&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;+&lt;/span&gt;
+    &lt;span class=&#39;o&#39;&gt;[&lt;/span&gt; &lt;span class=&#39;nb&#39;&gt;sub&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;-&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;resource&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;k&#39;&gt;if&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;present&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;.&lt;/span&gt;
+          &lt;span class=&#39;no&#39;&gt;For&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;example&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;?acl&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;?location&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;?logging&amp;quot;&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;,&lt;/span&gt; &lt;span class=&#39;ow&#39;&gt;or&lt;/span&gt; &lt;span class=&#39;s2&#39;&gt;&amp;quot;?torrent&amp;quot;&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;]&lt;/span&gt;&lt;span class=&#39;p&#39;&gt;;&lt;/span&gt;
+
+  &lt;span class=&#39;no&#39;&gt;CanonicalizedAmzHeaders&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;=&lt;/span&gt; &lt;span class=&#39;o&#39;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&#39;n&#39;&gt;described&lt;/span&gt; &lt;span class=&#39;n&#39;&gt;below&lt;/span&gt;&lt;span class=&#39;o&#39;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;What this means is that we just have to send the details about the file we want to upload to our website, where we will calculate the authorization string, then, we can use the authorization string to complete the request from our client application.&lt;/p&gt;</description>
+                <link>http://webproworker.github.io/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application</link>
+                <guid>http://webproworker.github.io/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application</guid>
+                <pubDate>2010-10-19T00:00:00+03:00</pubDate>
+        </item>
+
+
+</channel>
+</rss>

@@ -1,0 +1,177 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Check mail from command line</title>
+    <meta name="description" content="">
+    <meta name="author" content="Razvan Dimescu">
+
+    <!-- Enable responsive viewport -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <!-- Le styles -->
+    <link href="/assets/themes/twitter/bootstrap/css/bootstrap.2.2.2.min.css" rel="stylesheet">
+    <link href="/assets/themes/twitter/css/style.css?body=1" rel="stylesheet" type="text/css" media="all">
+
+    <!-- Le fav and touch icons -->
+  <!-- Update these with your own images
+    <link rel="shortcut icon" href="images/favicon.ico">
+    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+  -->
+
+    <!-- atom & rss feed -->
+    <link href="/atom.xml" type="application/atom+xml" rel="alternate" title="Sitewide ATOM Feed">
+    <link href="/rss.xml" type="application/rss+xml" rel="alternate" title="Sitewide RSS Feed">
+
+  </head>
+
+  <body>
+    <header class="main">
+      <div class="container">
+        <a class="logo" href="/">Razvan's laboratory</a>
+        <div class="social">
+          <a href="mailto:razvan@dimescu.com">
+            <img alt="gmail" src="/assets/themes/twitter/img/gmail.png">
+          </a>
+          <a href="http://linkedin.com/in/razvandimescu">
+            <img alt="linkedin" src="/assets/themes/twitter/img/linked.png">
+          </a>
+          <a href="http://twitter.com/razvandimescu">
+            <img alt="twitter" src="/assets/themes/twitter/img/twitter.png">
+          </a>
+          <a href="/rss.xml">
+            <img alt="rss" src="/assets/themes/twitter/img/rss.png">
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <div class="container">
+      <a href="/">
+        <img src="/assets/themes/twitter/img/cropped-header.jpg" alt="Header Image" class="top_banner">
+      </a>
+      <div class="row-fluid">
+        <div class="content">
+          <div class="span8">
+            
+<article>
+  <h1>Check mail from command line </h1>
+
+  <div class="row-fluid post-full">
+    <div class="span12">
+      <header>
+        Posted on 20 February 2012
+      </header>
+      <div class="content">
+        <p>I’m not using an email client to check my mail for quite some time mainly because I don’t like being interrupted while I’m in the middle of something. Since I’m developing from a command line (guake), for convenience, I would like to check my mail without changing context so I found <a href="http://www.commandlinefu.com/commands/view/3386/check-your-unread-gmail-from-the-command-line">this</a>:</p>
+<div class='highlight'><pre><code class='ruby'>  <span class='n'>curl</span> <span class='o'>-</span><span class='n'>u</span> <span class='n'>username</span> <span class='o'>--</span><span class='n'>silent</span> <span class='s2'>&quot;https://mail.google.com/mail/feed/atom&quot;</span> <span class='o'>|</span> <span class='n'>perl</span> <span class='o'>-</span><span class='n'>ne</span> <span class='err'>&#39;</span><span class='nb'>print</span> <span class='s2'>&quot;</span><span class='se'>\t</span><span class='s2'>&quot;</span> <span class='k'>if</span> <span class='sr'>//</span><span class='p'>;</span> <span class='nb'>print</span> <span class='s2'>&quot;$2</span><span class='se'>\n</span><span class='s2'>&quot;</span> <span class='k'>if</span> <span class='sr'>/&lt;(title|name)&gt;(.*)&lt;\/\1&gt;/</span>
+</code></pre></div>
+<p>You can use username:password if you’re comfortable with storing your password in plain text.</p>
+
+<p>I’ve placed the above command in a script file added executable rights (+x) to that and I’m using it like: gmail my_account to check for incoming new mail.</p>
+
+<p>Since I’m using multiple accounts, I’ve modified the script file to include the “all” command which will check all my email accounts. Currently you’ll have to introduce your password for each account. I’ll change this in a future post so that you can “safely” store you passwords and have a master password for checking all your accounts.</p>
+
+<p>Here’s <a href="https://gist.github.com/1868462">the script for checking multiple gmail accounts</a> by issuing the command: gmail all</p>
+      </div>
+
+    <footer>
+      
+        <ul class="categories-list">
+          <span>This entry was posted in</span>
+          <!-- <li><i class="icon-folder-open"></i></li> -->
+          
+          
+
+
+  
+     
+    	<li><a href="/categories.html#bash-ref">
+    		bash <span>1</span>
+    	</a></li>
+    
+  
+
+
+        </ul>
+        
+
+        
+    </footer>
+
+      <hr>
+      <div class="pagination">
+        <ul>
+        
+          <li class="prev"><a href="/2011/09/arduino-twinkle-twinkle-little-star" title="Arduino twinkle, twinkle little star">&larr; Previous</a></li>
+        
+          <li><a href="/archive.html">Archive</a></li>
+        
+          <li class="next disabled"><a>Next &rarr;</a>
+        
+        </ul>
+      </div>
+      <hr>
+      
+    </div>
+  </div>
+</article>
+
+<div id="conversait_area"></div>
+<script type="text/javascript">
+  var conversait_sitename = "testingthis";
+  (function() {
+    var conversait = document.createElement("script"); 
+    conversait.type = "text/javascript"; 
+    conversait.async = true;
+    conversait.src = "http://cvst.chickenkiller.com:8082/web/js/embed.js";
+    (document.getElementsByTagName("head")[0] || document.getElementsByTagName("body")[0]).appendChild(conversait);
+  })();
+</script>
+
+
+          </div>
+          <div class="span4">
+            <h2>Recent posts</h2>
+              <ul class="posts">  
+                  
+                   <li>
+                     <a href="/2012/02/check-mail-from-command-line">Check mail from command line</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2011/09/arduino-twinkle-twinkle-little-star">Arduino twinkle, twinkle little star</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/12/log4net-configuration">Log4net configuration</a>  
+                   </li>  
+                  
+                   <li>
+                     <a href="/2010/10/how-to-securely-call-amazon-webservices-from-a-client-application">How to securely call amazon webservices from a client application</a>  
+                   </li>  
+                  
+              </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <footer class="main">
+      <div class="container">
+        &copy; 2010 - 2014 Razvan Dimescu <a href="http://creativecommons.org/licenses/by/3.0/">under creativecommons</a>
+      </div>
+    </footer>
+    
+  </body>
+</html>
+

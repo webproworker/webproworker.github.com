@@ -4,5 +4,5 @@
   <div class="content">{{post.content}}</div>
   {% unless post.categories == empty %}
     <footer>Posted in <a href="{{ BASE_PATH }}{{post.category.url}}">{{post.category}}</a></footer> 
-  {% endunless %}
+  {% endunless %} 
 </article>
